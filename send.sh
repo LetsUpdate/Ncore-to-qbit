@@ -1,3 +1,3 @@
-#! /bin/zsh
-source venv/bin/activate
-python qbit.py $1
+#! /bin/bash
+source $(dirname $0)/venv/bin/activate
+python $(dirname $0)/qbit.py $1
