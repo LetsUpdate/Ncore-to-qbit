@@ -14,7 +14,7 @@ config = getConfig()
 
 def login():
     global client
-    client = nparser.Client(timeout=3)
+    client = nparser.Client(timeout=5)
     client.open(config["ncore-user"], config["ncore-pass"])
 
 
@@ -76,15 +76,15 @@ if __name__ == "__main__":
                 film = None
 
     # Download section
-    DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), "temp")
+    DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), "temp/")
 
     if(not os.path.isdir(DOWNLOAD_PATH)):
         os.mkdir(DOWNLOAD_PATH)
 
     client.download(torrents[index], DOWNLOAD_PATH, override=True)
-    files = glob.glob(DOWNLOAD_PATH+"/*")
+    files = glob.glob(DOWNLOAD_PATH+"*")
     # Upload to the torrent Client
     for f in files:
-        qbit.sendTorrent(f)
+        print(qbit.sendTorrent(f))
         print(f)
         os.remove(f)

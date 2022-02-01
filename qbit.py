@@ -25,7 +25,7 @@ def sendTorrent(file: str):
     global qbt_client
     if(qbt_client == None):
         login()
-    return qbt_client.torrents_add(file)
+    return qbt_client.torrents_add(torrent_files=file)
 
 
 if __name__ == "__main__":
