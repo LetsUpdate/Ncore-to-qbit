@@ -1,3 +1,5 @@
-#! /bin/bash
-source $(dirname $0)/venv/bin/activate
-python $(dirname $0)/ncore.py
+#! /bin/bash 
+DIR="$(dirname "$(readlink "$0")")"
+cd $DIR
+source "venv/bin/activate"
+python ncore.py

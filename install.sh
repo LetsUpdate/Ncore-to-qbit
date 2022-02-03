@@ -1,4 +1,6 @@
 #! /bin/bash
-python -m venv $(dirname $0)/venv
-source $(dirname $0)/venv/bin/activate
-pip install -r $(dirname $0)/requirements.txt
+DIR="$(dirname "$(readlink "$0")")"
+cd $DIR
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
