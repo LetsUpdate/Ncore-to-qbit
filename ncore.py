@@ -42,12 +42,14 @@ def torrentTitleForamtter(title: str, highlight: str):
 if __name__ == "__main__":
 
     film = None
+    indexes = []
     try:
         film = sys.argv[1].strip()
     except:
         film = None
 
     while True:
+        indexes = []
         if(film == None):
             film = input("Adj meg egy filmet! ").strip()
 
@@ -65,15 +67,17 @@ if __name__ == "__main__":
         if(len(torrents) == 0):
             print("Not found")
         else:
-            inp = input("Select one: ").strip()
-        if(len(inp) == 0):
-            film = None
-        else:
-            index = int(inp)
-            if((index) >= 0 and (index) < i):
+            inp = input("Select one: ").strip().split(" ")
+        if(len(inp) > 0):
+            for index in inp:
+                try:
+                    index = int(index)
+                    indexes.append(index)
+                except:
+                    print(index + " [bold red]is not a noumber[/bold red]")
+            if(len(indexes) > 0):
                 break
-            else:
-                film = None
+        film = None
 
     # Download section
     DOWNLOAD_PATH = os.path.join(os.path.dirname(__file__), "temp/")
@@ -81,10 +85,15 @@ if __name__ == "__main__":
     if(not os.path.isdir(DOWNLOAD_PATH)):
         os.mkdir(DOWNLOAD_PATH)
 
-    client.download(torrents[index], DOWNLOAD_PATH, override=True)
+    for index in indexes:
+        client.download(torrents[index], DOWNLOAD_PATH, override=True)
     files = glob.glob(DOWNLOAD_PATH+"*")
     # Upload to the torrent Client
     for f in files:
-        print(qbit.sendTorrent(f))
-        print(f)
+        try:
+            print(qbit.sendTorrent(f))
+            print("Sent! " + f)
+        except:
+            print("Something went wrong: "+f)
         os.remove(f)
+    print("Elküldve!")
